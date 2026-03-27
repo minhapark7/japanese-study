@@ -618,11 +618,40 @@ const VOCAB_CATS = [
   },
 ];
 
-// ── TTS (Google Translate TTS) ───────────────────
+// ── TTS (Web Speech API) ─────────────────────────
 
-let currentAudio = null;
 let currentPlayingCard = null;
 let playingTimer = null;
+
+// 여성 일본어 목소리 우선순위 (브라우저별 음성 이름)
+const JA_FEMALE_PRIORITY = [
+  'Google 日本語',          // Chrome (Google 음성 — 가장 자연스러움)
+  'O-Ren',                  // macOS
+  'Kyoko',                  // macOS 구버전
+  'Microsoft Haruka',       // Windows
+  'Microsoft Ayumi',        // Windows
+  'Microsoft Nanami',       // Windows
+];
+
+let _jaVoice = null;
+
+function _resolveVoice() {
+  if (_jaVoice) return _jaVoice;
+  const voices = speechSynthesis.getVoices();
+  // 1) 우선순위 목록에서 매칭
+  for (const name of JA_FEMALE_PRIORITY) {
+    const v = voices.find(v => v.name === name);
+    if (v) { _jaVoice = v; return v; }
+  }
+  // 2) ja-JP 중 이름에 female/woman/haruka/kyoko/nanami 포함
+  const femaleHint = /female|woman|haruka|kyoko|nanami|ayumi|o-ren/i;
+  const v2 = voices.find(v => v.lang.startsWith('ja') && femaleHint.test(v.name));
+  if (v2) { _jaVoice = v2; return v2; }
+  // 3) ja-JP 아무 목소리
+  const v3 = voices.find(v => v.lang === 'ja-JP') || voices.find(v => v.lang.startsWith('ja'));
+  if (v3) { _jaVoice = v3; return v3; }
+  return null;
+}
 
 function clearPlaying() {
   if (currentPlayingCard) {
@@ -633,30 +662,43 @@ function clearPlaying() {
 }
 
 function speak(text, cardEl) {
-  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
-  clearPlaying();
-
-  const url = 'https://translate.google.com/translate_tts?ie=UTF-8'
-    + '&tl=ja&client=tw-ob&q=' + encodeURIComponent(text);
-
-  const audio = new Audio(url);
-  currentAudio = audio;
-
-  if (cardEl) {
-    cardEl.classList.add('playing');
-    currentPlayingCard = cardEl;
-    playingTimer = setTimeout(clearPlaying, 5000);
-    audio.onended = clearPlaying;
-    audio.onerror = () => {
-      clearPlaying();
-      showToast('발음을 불러오지 못했어요 😢');
-    };
+  if (!window.speechSynthesis) {
+    showToast('이 브라우저는 음성을 지원하지 않아요 😢');
+    return;
   }
 
-  audio.play().catch(() => {
-    clearPlaying();
-    showToast('발음을 불러오지 못했어요 😢');
-  });
+  speechSynthesis.cancel();
+  clearPlaying();
+
+  function _doSpeak() {
+    const voice = _resolveVoice();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang  = 'ja-JP';
+    utter.rate  = 0.82;   // 살짝 느리게 — 학습용
+    utter.pitch = 1.15;   // 여성 목소리 강조
+    utter.volume = 1.0;
+    if (voice) utter.voice = voice;
+
+    if (cardEl) {
+      cardEl.classList.add('playing');
+      currentPlayingCard = cardEl;
+      playingTimer = setTimeout(clearPlaying, 6000);
+    }
+    utter.onend   = clearPlaying;
+    utter.onerror = clearPlaying;
+    speechSynthesis.speak(utter);
+  }
+
+  // 음성 목록이 아직 안 로드된 경우(첫 방문) 대기
+  if (speechSynthesis.getVoices().length > 0) {
+    setTimeout(_doSpeak, 50); // Chrome cancel() 직후 무시 버그 방지
+  } else {
+    speechSynthesis.onvoiceschanged = () => {
+      speechSynthesis.onvoiceschanged = null;
+      _jaVoice = null; // 다시 탐색
+      setTimeout(_doSpeak, 50);
+    };
+  }
 }
 
 // ── RENDER HIRAGANA ─────────────────────────────
