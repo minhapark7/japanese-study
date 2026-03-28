@@ -640,11 +640,155 @@
       flex-shrink: 0;
     }
 
+    /* ── HOME ── */
+    .home-wrap { max-width: 640px; margin: 0 auto; padding: 8px 0; }
+    .home-today {
+      background: linear-gradient(135deg, #ffb7c5 0%, #c9b8ff 100%);
+      border-radius: 20px;
+      padding: 22px 24px;
+      color: #fff;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(180,120,200,.25);
+    }
+    .home-today-label { font-size: .78rem; font-weight: 800; opacity: .85; letter-spacing: .1em; margin-bottom: 8px; }
+    .home-today-jp    { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; }
+    .home-today-kr    { font-size: .9rem; opacity: .9; }
+    .home-today-btn   { margin-top: 12px; background: rgba(255,255,255,.3); border: none; border-radius: 50px; padding: 6px 16px; font-family: inherit; font-size: .82rem; font-weight: 700; color: #fff; cursor: pointer; }
+    .home-today-btn:hover { background: rgba(255,255,255,.45); }
+
+    .home-summary {
+      display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .home-stat {
+      flex: 1; min-width: 120px;
+      background: var(--white);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .home-stat-val { font-size: 2rem; font-weight: 800; line-height: 1; }
+    .home-stat-lbl { font-size: .75rem; color: var(--sub); font-weight: 700; margin-top: 4px; }
+
+    .home-menus {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    .home-menu-card {
+      background: var(--white);
+      border-radius: 18px;
+      padding: 20px 16px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: transform .18s, box-shadow .18s;
+      text-align: center;
+      user-select: none;
+    }
+    .home-menu-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(180,120,200,.2); }
+    .home-menu-icon { font-size: 2rem; margin-bottom: 8px; }
+    .home-menu-name { font-size: .88rem; font-weight: 800; color: var(--text); }
+    .home-menu-desc { font-size: .72rem; color: var(--sub); margin-top: 2px; }
+
+    /* ── QUIZ ASSEMBLY ── */
+    .quiz-listen-btn {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 18px;
+      background: var(--yellow-l);
+      border: 2px solid var(--yellow);
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: .82rem;
+      font-weight: 700;
+      color: #7a6000;
+      cursor: pointer;
+      margin: 6px auto 10px;
+      transition: background .15s;
+    }
+    .quiz-listen-btn.visible { display: inline-flex; }
+    .quiz-listen-btn:hover { background: var(--yellow); }
+
+    .asm-area { margin-top: 8px; }
+    .asm-cats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+    .asm-cat-label { font-size: .7rem; font-weight: 800; color: var(--sub); letter-spacing: .08em; margin-bottom: 5px; }
+    .asm-blocks { display: flex; flex-wrap: wrap; gap: 7px; }
+    .asm-block {
+      padding: 8px 14px;
+      border-radius: 50px;
+      border: 2px solid transparent;
+      font-family: inherit;
+      font-size: .9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .asm-block.cat-subj  { background:#ffe8f0; color:#a03060; }
+    .asm-block.cat-place { background:#e0f0ff; color:#1a60a0; }
+    .asm-block.cat-obj   { background:#fff8e0; color:#806000; }
+    .asm-block.cat-verb  { background:#eee0ff; color:#5020a0; }
+    .asm-block.selected  { border-color: #333; transform: translateY(-2px); box-shadow: 0 3px 10px rgba(0,0,0,.15); }
+    .asm-block:hover     { opacity: .85; }
+
+    .asm-built {
+      min-height: 52px;
+      background: var(--bg);
+      border: 2px dashed #ddd4f7;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .asm-built-ph { color: var(--sub); font-size: .88rem; font-weight: 600; }
+    .asm-tag {
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-size: .9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .asm-tag:hover { opacity: .75; }
+
+    /* ── WRONG NOTES ── */
+    .wrong-notes-wrap { max-width: 560px; margin: 32px auto 0; }
+    .wn-item {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .wn-q    { font-size: 1.3rem; font-weight: 800; }
+    .wn-a    { font-weight: 700; color: #1a7a4a; flex: 1; }
+    .wn-cnt  { font-size: .78rem; background: #fff0f0; color: #c0392b; font-weight: 700; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+    .wn-type { font-size: .72rem; background: var(--purple-l); color: #6040b0; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+    .wn-retry-btn {
+      padding: 10px 24px;
+      background: linear-gradient(135deg,#ffb7c5,#c9b8ff);
+      border: none; border-radius: 50px;
+      font-family: inherit; font-size: .9rem; font-weight: 800;
+      color: #fff; cursor: pointer;
+      box-shadow: 0 3px 12px rgba(180,120,200,.3);
+      margin-top: 12px;
+    }
+
     @media (max-width: 480px) {
       .hira-grid { gap: 7px; }
       .hira-card .char { font-size: 1.5rem; }
       .quiz-question { font-size: 3rem; }
       .cal-cell { border-radius: 8px; font-size: .75rem; }
+      .home-menus { grid-template-columns: repeat(2,1fr); }
     }
   </style>
 </head>
@@ -656,7 +800,8 @@
 </header>
 
 <div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('kana', event)">🈷️ 가나(仮名)</button>
+  <button class="tab-btn active" onclick="switchTab('home', event)">🏠 홈</button>
+  <button class="tab-btn" onclick="switchTab('kana', event)">🈷️ 가나(仮名)</button>
   <button class="tab-btn" onclick="switchTab('vocab', event)">📖 기초단어</button>
   <button class="tab-btn" onclick="switchTab('travel', event)">✈️ 여행회화</button>
   <button class="tab-btn" onclick="switchTab('build', event)">🧩 문장조합</button>
@@ -664,8 +809,11 @@
   <button class="tab-btn" onclick="switchTab('record', event)">📅 학습기록</button>
 </div>
 
+<!-- ═══════════════ HOME ═══════════════ -->
+<div id="panel-home" class="panel active"></div>
+
 <!-- ═══════════════ KANA ═══════════════ -->
-<div id="panel-kana" class="panel active">
+<div id="panel-kana" class="panel">
   <div class="subtabs" id="kana-subtabs">
     <button class="subtab-btn active" onclick="switchSubtab('panel-kana','kana-hira',this)">🔤 히라가나</button>
     <button class="subtab-btn" onclick="switchSubtab('panel-kana','kana-kata',this)">🔡 카타카나</button>
@@ -692,6 +840,7 @@
 <!-- ═══════════════ RECORD ═══════════════ -->
 <div id="panel-record" class="panel">
   <div class="cal-wrap" id="cal-wrap"></div>
+  <div class="wrong-notes-wrap" id="wrong-notes-wrap"></div>
 </div>
 
 <!-- ═══════════════ QUIZ ═══════════════ -->
@@ -702,6 +851,7 @@
     <button class="mode-btn" onclick="setMode('kata',this)">🔡 카타카나</button>
     <button class="mode-btn" onclick="setMode('vocab',this)">📖 단어</button>
     <button class="mode-btn" onclick="setMode('sentence',this)">💬 문장</button>
+    <button class="mode-btn" onclick="setMode('assembly',this)">🧩 문장조합</button>
   </div>
 
   <!-- 문제 화면 -->
@@ -712,6 +862,8 @@
     </div>
     <div class="quiz-question" id="quiz-q">?</div>
     <div class="quiz-hint" id="quiz-hint">다음 중 맞는 읽기를 고르세요</div>
+    <button class="quiz-listen-btn" id="quiz-listen-btn" onclick="quizListen()">🔊 발음 듣기</button>
+    <div id="assembly-area" style="display:none"></div>
     <div class="quiz-feedback" id="quiz-fb"></div>
     <div class="quiz-choices" id="quiz-choices"></div>
     <button class="next-btn" id="next-btn" style="display:none" onclick="advanceQuiz()">다음 문제 ▶</button>
@@ -1294,6 +1446,23 @@ function builderReset() {
   updateBuilderResult();
 }
 
+// ── ASSEMBLY QUIZ DATA ────────────────────────────
+
+const ASSEMBLY_QS = [
+  { kr:'나는 편의점에서 초밥을 먹어요', parts:[{jp:'わたしは',cat:'subj'},{jp:'コンビニで',cat:'place'},{jp:'すしを',cat:'obj'},{jp:'たべます',cat:'verb'}] },
+  { kr:'나는 식당에서 라멘을 먹어요',   parts:[{jp:'わたしは',cat:'subj'},{jp:'レストランで',cat:'place'},{jp:'ラーメンを',cat:'obj'},{jp:'たべます',cat:'verb'}] },
+  { kr:'친구는 집에서 책을 읽어요',     parts:[{jp:'ともだちは',cat:'subj'},{jp:'いえで',cat:'place'},{jp:'ほんを',cat:'obj'},{jp:'よみます',cat:'verb'}] },
+  { kr:'선생님은 학교에서 커피를 마셔요', parts:[{jp:'せんせいは',cat:'subj'},{jp:'がっこうで',cat:'place'},{jp:'コーヒーを',cat:'obj'},{jp:'のみます',cat:'verb'}] },
+  { kr:'나는 역에서 표를 사요',         parts:[{jp:'わたしは',cat:'subj'},{jp:'えきで',cat:'place'},{jp:'きっぷを',cat:'obj'},{jp:'かいます',cat:'verb'}] },
+  { kr:'그녀는 공원에서 물을 마셔요',   parts:[{jp:'かのじょは',cat:'subj'},{jp:'こうえんで',cat:'place'},{jp:'みずを',cat:'obj'},{jp:'のみます',cat:'verb'}] },
+  { kr:'나는 편의점에서 빵을 사요',     parts:[{jp:'わたしは',cat:'subj'},{jp:'コンビニで',cat:'place'},{jp:'パンを',cat:'obj'},{jp:'かいます',cat:'verb'}] },
+  { kr:'그는 집에서 봐요',             parts:[{jp:'かれは',cat:'subj'},{jp:'いえで',cat:'place'},{jp:'みます',cat:'verb'}] },
+  { kr:'당신은 식당에서 초밥을 먹어요', parts:[{jp:'あなたは',cat:'subj'},{jp:'レストランで',cat:'place'},{jp:'すしを',cat:'obj'},{jp:'たべます',cat:'verb'}] },
+  { kr:'친구는 역에서 있어요',         parts:[{jp:'ともだちは',cat:'subj'},{jp:'えきで',cat:'place'},{jp:'います',cat:'verb'}] },
+  { kr:'선생님은 학교에서 책을 읽어요', parts:[{jp:'せんせいは',cat:'subj'},{jp:'がっこうで',cat:'place'},{jp:'ほんを',cat:'obj'},{jp:'よみます',cat:'verb'}] },
+  { kr:'나는 공원에서 커피를 마셔요',   parts:[{jp:'わたしは',cat:'subj'},{jp:'こうえんで',cat:'place'},{jp:'コーヒーを',cat:'obj'},{jp:'のみます',cat:'verb'}] },
+];
+
 // ── QUIZ DATA ─────────────────────────────────────
 
 const SENTENCES = [
@@ -1319,6 +1488,7 @@ HIRA_ROWS.forEach(row => row.chars.forEach(ch => { if (ch) QUIZ_POOL.push({type:
 KATA_ROWS.forEach(row => row.chars.forEach(ch => { if (ch) QUIZ_POOL.push({type:'kata', q:ch[0], a:ch[1]}); }));
 VOCAB_CATS.forEach(cat => cat.words.forEach(w => QUIZ_POOL.push({type:'vocab', q:w.jp, a:w.kr})));
 SENTENCES.forEach(s => QUIZ_POOL.push({type:'sentence', q:s.jp, a:s.kr}));
+ASSEMBLY_QS.forEach(s => QUIZ_POOL.push({type:'assembly', q:s.kr, a:s.parts.map(p=>p.jp).join(' '), parts:s.parts}));
 
 // ── QUIZ STATE ────────────────────────────────────
 
@@ -1327,18 +1497,22 @@ let quizMode = 'all';
 let sessionQuestions = [];
 let sessionIndex = 0;
 let sessionCorrect = 0;
-let sessionWrong = [];   // [{q, a, chosen}]
+let sessionWrong = [];   // [{q, a, chosen, type}]
 let quizLocked = false;
 let currentQuiz = null;
+let assemblySelected = [];  // 선택된 블록 순서대로
 
 function shuffled(arr) { return [...arr].sort(() => Math.random() - .5); }
 
 function getPool() {
-  return quizMode === 'all' ? QUIZ_POOL : QUIZ_POOL.filter(x => x.type === quizMode);
+  if (quizMode === 'all') return QUIZ_POOL.filter(x => x.type !== 'assembly');
+  return QUIZ_POOL.filter(x => x.type === quizMode);
 }
 
 function hintText(type) {
-  return (type === 'vocab' || type === 'sentence') ? '다음 중 맞는 뜻을 고르세요' : '다음 중 맞는 로마자 읽기를 고르세요';
+  if (type === 'assembly') return '한국어 문장을 일본어 블록으로 조합하세요';
+  if (type === 'vocab' || type === 'sentence') return '다음 중 맞는 뜻을 고르세요';
+  return '다음 중 맞는 로마자 읽기를 고르세요';
 }
 
 // ── SESSION ───────────────────────────────────────
@@ -1366,6 +1540,7 @@ function showQuestion() {
   quizLocked = false;
   document.getElementById('quiz-fb').textContent = '';
   document.getElementById('next-btn').style.display = 'none';
+  assemblySelected = [];
 
   currentQuiz = sessionQuestions[sessionIndex];
   const total = sessionQuestions.length;
@@ -1378,36 +1553,135 @@ function showQuestion() {
   qEl.className = 'quiz-question' + (currentQuiz.type === 'sentence' ? ' quiz-sentence-q' : '');
   document.getElementById('quiz-hint').textContent = hintText(currentQuiz.type);
 
+  // 발음 버튼 표시 (vocab/sentence/assembly만)
+  const listenBtn = document.getElementById('quiz-listen-btn');
+  const hasPron = ['vocab','sentence','assembly'].includes(currentQuiz.type);
+  listenBtn.classList.toggle('visible', hasPron);
+
+  // assembly 모드 처리
+  const asmArea = document.getElementById('assembly-area');
+  const choicesBox = document.getElementById('quiz-choices');
+
+  if (currentQuiz.type === 'assembly') {
+    asmArea.style.display = '';
+    choicesBox.innerHTML = '';
+    renderAssemblyArea();
+    return;
+  }
+
+  asmArea.style.display = 'none';
+
   const sameType = QUIZ_POOL.filter(x => x.type === currentQuiz.type && x.a !== currentQuiz.a);
   const wrong = shuffled(sameType).slice(0, 3).map(x => x.a);
   const choices = shuffled([currentQuiz.a, ...wrong]);
 
-  const box = document.getElementById('quiz-choices');
-  box.innerHTML = '';
+  choicesBox.innerHTML = '';
   choices.forEach(c => {
     const btn = document.createElement('button');
     btn.className = 'choice-btn';
     btn.textContent = c;
     btn.onclick = () => checkAnswer(btn, c);
-    box.appendChild(btn);
+    choicesBox.appendChild(btn);
   });
+}
+
+// ── ASSEMBLY QUIZ LOGIC ────────────────────────────
+
+function renderAssemblyArea() {
+  const asmArea = document.getElementById('assembly-area');
+  const parts = currentQuiz.parts;
+
+  // 선택된 블록을 보여주는 영역
+  const builtHtml = assemblySelected.length === 0
+    ? '<span class="asm-built-ph">블록을 탭해서 문장을 만들어보세요</span>'
+    : assemblySelected.map((p, i) => {
+        const cat = parts.find(x => x.jp === p.jp);
+        const cls = cat ? getCatCls(cat.cat) : '';
+        return `<span class="asm-tag ${cls}" onclick="removeAssemblyBlock(${i})" title="클릭해서 제거">${p.jp}</span>`;
+      }).join(' ');
+
+  // 블록 선택 영역 (아직 선택 안 된 것들)
+  const remaining = parts.filter(p => !assemblySelected.find(s => s.jp === p.jp));
+  // 섞어서 제공
+  const pool = shuffled(remaining);
+
+  const blocksHtml = pool.map(p =>
+    `<button class="asm-block ${getCatCls(p.cat)}" onclick="selectAssemblyBlock('${p.jp}','${p.cat}')">${p.jp}</button>`
+  ).join('');
+
+  asmArea.innerHTML = `
+    <div class="asm-area">
+      <div class="asm-built">${builtHtml}</div>
+      <div class="asm-blocks">${blocksHtml}</div>
+      <button class="next-btn" style="margin-top:10px;display:${quizLocked?'none':'inline-block'}" onclick="checkAssembly()">✅ 확인</button>
+    </div>`;
+}
+
+function getCatCls(cat) {
+  return {subj:'cat-subj', place:'cat-place', obj:'cat-obj', verb:'cat-verb'}[cat] || '';
+}
+
+function selectAssemblyBlock(jp, cat) {
+  if (quizLocked) return;
+  assemblySelected.push({jp, cat});
+  renderAssemblyArea();
+}
+
+function removeAssemblyBlock(index) {
+  if (quizLocked) return;
+  assemblySelected.splice(index, 1);
+  renderAssemblyArea();
+}
+
+function checkAssembly() {
+  if (quizLocked) return;
+  if (assemblySelected.length === 0) { showToast('블록을 선택해주세요!'); return; }
+
+  quizLocked = true;
+  const userAnswer = assemblySelected.map(p => p.jp).join(' ');
+  const correct = currentQuiz.a;
+  const isCorrect = userAnswer === correct;
+
+  const total = sessionQuestions.length;
+  document.getElementById('quiz-prog-fill').style.width = `${((sessionIndex + 1) / total) * 100}%`;
+
+  if (isCorrect) {
+    sessionCorrect++;
+    document.getElementById('quiz-fb').textContent = '✨ 정답!';
+    speak(correct.replace(/ /g, ''));
+  } else {
+    document.getElementById('quiz-fb').textContent = `😢 정답: ${correct}`;
+    sessionWrong.push({ q: currentQuiz.q, a: correct, chosen: userAnswer, type: currentQuiz.type });
+  }
+
+  const nextBtn = document.getElementById('next-btn');
+  nextBtn.style.display = '';
+  nextBtn.textContent = sessionIndex < total - 1 ? '다음 문제 ▶' : '결과 보기 🏆';
+
+  // 확인 버튼 숨기기
+  const confirmBtn = document.querySelector('#assembly-area .next-btn');
+  if (confirmBtn) confirmBtn.style.display = 'none';
 }
 
 function checkAnswer(btn, choice) {
   if (quizLocked) return;
   quizLocked = true;
 
-  const correct = choice === currentQuiz.a;
+  const isCorrect = choice === currentQuiz.a;
   const total = sessionQuestions.length;
 
-  if (correct) {
+  if (isCorrect) {
     sessionCorrect++;
     btn.classList.add('correct');
     document.getElementById('quiz-fb').textContent = '✨ 정답!';
+    // vocab/sentence는 정답 시 자동 발음
+    if (currentQuiz.type === 'vocab' || currentQuiz.type === 'sentence') {
+      speak(currentQuiz.q);
+    }
   } else {
     btn.classList.add('wrong');
     document.getElementById('quiz-fb').textContent = `😢 정답: ${currentQuiz.a}`;
-    sessionWrong.push({ q: currentQuiz.q, a: currentQuiz.a, chosen: choice });
+    sessionWrong.push({ q: currentQuiz.q, a: currentQuiz.a, chosen: choice, type: currentQuiz.type });
     document.querySelectorAll('.choice-btn').forEach(b => {
       if (b.textContent === currentQuiz.a) b.classList.add('correct');
     });
@@ -1418,6 +1692,16 @@ function checkAnswer(btn, choice) {
   const nextBtn = document.getElementById('next-btn');
   nextBtn.style.display = '';
   nextBtn.textContent = sessionIndex < total - 1 ? '다음 문제 ▶' : '결과 보기 🏆';
+}
+
+function quizListen() {
+  if (!currentQuiz) return;
+  // vocab/sentence: 문제(일본어) 발음, assembly: 정답 발음
+  if (currentQuiz.type === 'assembly') {
+    speak(currentQuiz.a.replace(/ /g, ''));
+  } else {
+    speak(currentQuiz.q);
+  }
 }
 
 function advanceQuiz() {
@@ -1457,6 +1741,7 @@ function showResult() {
     ws.innerHTML = html;
   }
 
+  saveWrongNotes(sessionWrong);
   logActivity('quiz');
   saveHistory(sessionCorrect, total, pct);
   renderHistory();
@@ -1465,7 +1750,7 @@ function showResult() {
 // ── HISTORY ───────────────────────────────────────
 
 const HISTORY_KEY = 'jp-quiz-history';
-const MODE_LABEL = {all:'종합', hira:'히라가나', kata:'카타카나', vocab:'단어', sentence:'문장'};
+const MODE_LABEL = {all:'종합', hira:'히라가나', kata:'카타카나', vocab:'단어', sentence:'문장', assembly:'문장조합', retry:'오답재시도'};
 
 function saveHistory(correct, total, pct) {
   const history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
@@ -1510,6 +1795,90 @@ function renderHistory() {
   });
   html += '</div>';
   sec.innerHTML = html;
+}
+
+// ── WRONG NOTES ───────────────────────────────────
+
+const WRONG_NOTES_KEY = 'jp-wrong-notes';
+const WN_TYPE_LABEL = {hira:'히라가나', kata:'카타카나', vocab:'단어', sentence:'문장', assembly:'문장조합'};
+
+function saveWrongNotes(wrongs) {
+  if (!wrongs.length) return;
+  const notes = JSON.parse(localStorage.getItem(WRONG_NOTES_KEY) || '{}');
+  const today = todayKey();
+  wrongs.forEach(w => {
+    const key = (w.type || 'all') + ':' + w.q;
+    if (!notes[key]) notes[key] = { q: w.q, a: w.a, type: w.type || 'all', count: 0, lastDate: today };
+    notes[key].count++;
+    notes[key].lastDate = today;
+  });
+  localStorage.setItem(WRONG_NOTES_KEY, JSON.stringify(notes));
+}
+
+function renderWrongNotes() {
+  const wrap = document.getElementById('wrong-notes-wrap');
+  if (!wrap) return;
+  const notes = JSON.parse(localStorage.getItem(WRONG_NOTES_KEY) || '{}');
+  const items = Object.values(notes).sort((a, b) => b.count - a.count);
+
+  if (!items.length) {
+    wrap.innerHTML = '';
+    return;
+  }
+
+  let html = `<div class="section-title" style="margin-top:32px">📝 오답노트</div>`;
+  html += `<div style="display:flex;justify-content:flex-end;margin-bottom:8px">
+    <button class="wn-retry-btn" onclick="retryWrongNotes()" style="margin:0;padding:8px 20px;font-size:.85rem">🔄 오답 다시 풀기</button>
+    <button onclick="clearWrongNotes()" style="margin-left:8px;padding:8px 16px;border:none;border-radius:50px;background:#fff0f0;color:#c0392b;font-family:inherit;font-size:.82rem;font-weight:700;cursor:pointer">전체 삭제</button>
+  </div>`;
+
+  items.forEach(item => {
+    html += `<div class="wn-item">
+      <span class="wn-q">${item.q}</span>
+      <span class="wn-a">→ ${item.a}</span>
+      <span class="wn-type">${WN_TYPE_LABEL[item.type] || item.type}</span>
+      <span class="wn-cnt">${item.count}번 틀렸어요</span>
+    </div>`;
+  });
+
+  wrap.innerHTML = html;
+}
+
+function clearWrongNotes() {
+  if (!confirm('오답노트를 모두 삭제할까요?')) return;
+  localStorage.removeItem(WRONG_NOTES_KEY);
+  renderWrongNotes();
+}
+
+function retryWrongNotes() {
+  const notes = JSON.parse(localStorage.getItem(WRONG_NOTES_KEY) || '{}');
+  const items = Object.values(notes);
+  if (!items.length) { showToast('오답노트가 비어있어요!'); return; }
+
+  // 오답 중 assembly 타입은 제외 (MCQ로 재시도 어려움)
+  const mcqItems = items.filter(x => x.type !== 'assembly');
+  if (!mcqItems.length) { showToast('재시도 가능한 오답이 없어요 (assembly 제외)'); return; }
+
+  // 퀴즈 탭으로 이동 후 오답 세션 시작
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-quiz').classList.add('active');
+  document.querySelector('.tab-btn[onclick*="quiz"]').classList.add('active');
+
+  // 오답을 퀴즈 풀로 만들기
+  sessionQuestions = shuffled(mcqItems.map(item => ({
+    type: item.type,
+    q: item.q,
+    a: item.a,
+  }))).slice(0, QUIZ_SIZE);
+  sessionIndex = 0;
+  sessionCorrect = 0;
+  sessionWrong = [];
+  quizMode = 'retry';
+
+  document.getElementById('quiz-playing').style.display = '';
+  document.getElementById('quiz-result').style.display = 'none';
+  showQuestion();
 }
 
 // ── STUDY RECORD ─────────────────────────────────
@@ -1622,7 +1991,89 @@ function renderDayDetail(dateKey, records) {
   </div>`;
 }
 
-// ── TABS ─────────────────────────────────────────
+// ── HOME ──────────────────────────────────────────
+
+const HOME_EXPRESSIONS = [
+  {jp:'おはようございます', kr:'좋은 아침이에요', roma:'ohayou gozaimasu'},
+  {jp:'ありがとうございます', kr:'감사합니다', roma:'arigatou gozaimasu'},
+  {jp:'よろしくおねがいします', kr:'잘 부탁드립니다', roma:'yoroshiku onegai shimasu'},
+  {jp:'いただきます', kr:'잘 먹겠습니다', roma:'itadakimasu'},
+  {jp:'おやすみなさい', kr:'잘 자요', roma:'oyasumi nasai'},
+  {jp:'がんばってください', kr:'힘내세요', roma:'ganbatte kudasai'},
+  {jp:'きれいですね', kr:'예쁘네요', roma:'kirei desu ne'},
+  {jp:'たのしいです', kr:'즐거워요', roma:'tanoshii desu'},
+  {jp:'すきです', kr:'좋아해요', roma:'suki desu'},
+  {jp:'もういちどおねがいします', kr:'한 번 더 부탁해요', roma:'mou ichido onegai shimasu'},
+];
+
+function buildHome() {
+  const records = JSON.parse(localStorage.getItem(RECORD_KEY) || '{}');
+  const today = todayKey();
+  const todayRecord = records[today] || {};
+
+  // 오늘의 표현 (날짜 기반 랜덤)
+  const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+  const expr = HOME_EXPRESSIONS[dayOfYear % HOME_EXPRESSIONS.length];
+
+  // 연속 학습 스트릭 계산
+  let streak = 0;
+  const d = new Date();
+  while (true) {
+    const k = d.toISOString().slice(0, 10);
+    if (!records[k]) break;
+    streak++;
+    d.setDate(d.getDate() - 1);
+  }
+
+  // 오늘 학습한 항목
+  const studiedToday = [];
+  if (todayRecord.hira)   studiedToday.push('히라가나');
+  if (todayRecord.kata)   studiedToday.push('카타카나');
+  if (todayRecord.vocab)  studiedToday.push('단어');
+  if (todayRecord.quiz)   studiedToday.push(`퀴즈 ${todayRecord.quiz}회`);
+  if (todayRecord.travel) studiedToday.push('여행회화');
+
+  const MENU_CARDS = [
+    {name:'kana',   icon:'🈷️', label:'가나(仮名)', desc:'히라가나 · 카타카나'},
+    {name:'vocab',  icon:'📖', label:'기초단어',   desc:'인사 · 숫자 · 음식 등'},
+    {name:'travel', icon:'✈️', label:'여행회화',   desc:'공항 · 호텔 · 식당 등'},
+    {name:'build',  icon:'🧩', label:'문장조합',   desc:'나만의 일본어 문장'},
+    {name:'quiz',   icon:'🎮', label:'퀴즈',       desc:'실력 확인하기'},
+    {name:'record', icon:'📅', label:'학습기록',   desc:'달력 · 오답노트'},
+  ];
+
+  const cardsHtml = MENU_CARDS.map(card =>
+    `<div class="home-menu-card" onclick="switchTabByName('${card.name}')">
+      <div style="font-size:1.8rem;margin-bottom:6px">${card.icon}</div>
+      <div style="font-weight:800;font-size:.95rem">${card.label}</div>
+      <div style="font-size:.78rem;color:var(--sub);margin-top:3px">${card.desc}</div>
+    </div>`
+  ).join('');
+
+  document.getElementById('panel-home').innerHTML = `
+    <div style="max-width:600px;margin:0 auto">
+      <div class="home-today" onclick="speak('${expr.jp}')">
+        <div class="home-today-label">✨ 오늘의 표현</div>
+        <div class="home-today-jp">${expr.jp}</div>
+        <div class="home-today-kr">${expr.kr} · ${expr.roma}</div>
+        <button class="home-today-btn">🔊 발음 듣기</button>
+      </div>
+      <div class="home-summary">
+        <div class="home-stat"><div class="home-stat-val">${streak}</div><div class="home-stat-lbl">연속 학습일</div></div>
+        <div class="home-stat"><div class="home-stat-val">${studiedToday.length}</div><div class="home-stat-lbl">오늘 완료 항목</div></div>
+        <div class="home-stat"><div class="home-stat-val">${Object.keys(records).length}</div><div class="home-stat-lbl">총 학습일</div></div>
+      </div>
+      ${studiedToday.length ? `<div style="text-align:center;color:var(--sub);font-size:.85rem;margin-bottom:16px">오늘 학습: ${studiedToday.join(' · ')}</div>` : ''}
+      <div class="home-menus">${cardsHtml}</div>
+    </div>`;
+}
+
+function switchTabByName(name) {
+  const btn = document.querySelector(`.tab-btn[onclick*="'${name}'"]`);
+  if (btn) btn.click();
+}
+
+// ── TABS ──────────────────────────────────────────
 
 function switchTab(name, e) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -1630,10 +2081,15 @@ function switchTab(name, e) {
   document.getElementById('panel-' + name).classList.add('active');
   e.currentTarget.classList.add('active');
 
+  if (name === 'home')  buildHome();
   if (name === 'kana'   && !document.getElementById('kana-hira').innerHTML)    buildKana();
   if (name === 'travel' && !document.getElementById('travel-content').innerHTML) buildTravel();
   if (name === 'build'  && !document.getElementById('panel-build').innerHTML)  buildSentencePanel();
-  if (name === 'record') { const n=new Date(); buildCalendar(n.getFullYear(), n.getMonth()); }
+  if (name === 'record') {
+    const n = new Date();
+    buildCalendar(n.getFullYear(), n.getMonth());
+    renderWrongNotes();
+  }
   if (name === 'quiz') {
     if (!currentQuiz) startSession();
     renderHistory();
@@ -1655,7 +2111,7 @@ function showToast(msg) {
 // ── INIT ─────────────────────────────────────────
 buildKana();
 buildVocab();
-logActivity('hira');
+buildHome();
 </script>
 </body>
 </html>
