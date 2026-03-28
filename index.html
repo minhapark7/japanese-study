@@ -123,8 +123,17 @@
       padding: 14px 8px 12px;
       text-align: center;
       box-shadow: var(--shadow);
-      cursor: default;
+      cursor: pointer;
+      transition: transform .18s, box-shadow .18s;
       user-select: none;
+    }
+    .hira-card:hover {
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 0 8px 28px rgba(180,120,200,.22);
+    }
+    .hira-card.playing {
+      background: linear-gradient(135deg, var(--pink-l), var(--purple-l));
+      box-shadow: 0 0 0 3px var(--purple);
     }
     .hira-card .char {
       font-size: 2rem;
@@ -279,23 +288,119 @@
     }
     .next-btn:hover { transform: translateY(-2px) scale(1.03); }
 
-    .quiz-listen-btn {
-      display: inline-flex;
+    /* ── SENTENCE BUILDER ── */
+    .builder-wrap { max-width: 600px; margin: 0 auto; }
+    .block-category { margin-bottom: 20px; }
+    .block-cat-label {
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      color: var(--sub);
+      margin-bottom: 10px;
+    }
+    .block-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .block-chip {
+      padding: 10px 16px;
+      border-radius: 50px;
+      border: 2px solid transparent;
+      font-family: inherit;
+      font-size: .92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s, opacity .15s;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 6px;
-      padding: 8px 20px;
-      background: var(--yellow-l);
-      border: 2px solid var(--yellow);
+      gap: 2px;
+      line-height: 1.2;
+    }
+    .block-chip:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.12); }
+    .block-chip.selected { border-color: #555; opacity: 1; transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,.18); }
+    .block-chip .chip-jp  { font-size: 1rem; }
+    .block-chip .chip-kr  { font-size: .68rem; opacity: .75; }
+
+    /* category colours */
+    .block-chip.cat-subj  { background: #ffe8f0; color: #a03060; }
+    .block-chip.cat-place { background: #e0f0ff; color: #1a60a0; }
+    .block-chip.cat-obj   { background: #fff8e0; color: #806000; }
+    .block-chip.cat-verb  { background: #eee0ff; color: #5020a0; }
+
+    .builder-result {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 22px 24px;
+      box-shadow: var(--shadow);
+      margin-top: 8px;
+      min-height: 90px;
+    }
+    .builder-jp {
+      font-size: 1.6rem;
+      font-weight: 800;
+      line-height: 1.4;
+      word-break: keep-all;
+      margin-bottom: 8px;
+    }
+    .builder-kr {
+      font-size: 1rem;
+      color: var(--sub);
+      font-weight: 600;
+    }
+    .builder-hint {
+      font-size: .82rem;
+      color: #c05020;
+      margin-top: 10px;
+      font-weight: 700;
+    }
+    .builder-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .builder-btn {
+      padding: 10px 22px;
+      border: none;
       border-radius: 50px;
       font-family: inherit;
-      font-size: .88rem;
+      font-size: .9rem;
       font-weight: 700;
-      color: #7a6000;
       cursor: pointer;
-      margin-bottom: 16px;
-      transition: transform .15s, background .15s;
+      transition: transform .15s;
     }
-    .quiz-listen-btn:hover { background: var(--yellow); transform: scale(1.05); }
+    .builder-btn:hover { transform: translateY(-2px); }
+    .builder-btn.speak { background: linear-gradient(135deg,#ffb7c5,#c9b8ff); color:#fff; box-shadow:0 3px 12px rgba(180,120,200,.3); }
+    .builder-btn.reset { background: var(--white); border: 2px solid #e0d8f0; color: var(--sub); }
+
+    /* ── SUBTABS (inside panels) ── */
+    .subtabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 16px 0 4px;
+      max-width: 560px;
+      margin: 0 auto 4px;
+    }
+    .subtab-btn {
+      padding: 7px 18px;
+      border: 2px solid #e8dfff;
+      border-radius: 50px;
+      background: var(--white);
+      font-family: inherit;
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--sub);
+      cursor: pointer;
+      transition: all .18s;
+    }
+    .subtab-btn:hover { border-color: var(--purple); color: var(--text); }
+    .subtab-btn.active {
+      background: linear-gradient(135deg, #ffb7c5, #c9b8ff);
+      border-color: transparent;
+      color: #fff;
+      box-shadow: 0 3px 10px rgba(180,120,200,.28);
+    }
+    .subpanel { display: none; }
+    .subpanel.active { display: block; }
 
     /* ── QUIZ MODE SELECTOR ── */
     .quiz-modes {
@@ -551,25 +656,38 @@
 </header>
 
 <div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('hira', event)">🔤 히라가나</button>
-  <button class="tab-btn" onclick="switchTab('kata', event)">🔡 카타카나</button>
+  <button class="tab-btn active" onclick="switchTab('kana', event)">🈷️ 가나(仮名)</button>
   <button class="tab-btn" onclick="switchTab('vocab', event)">📖 기초단어</button>
   <button class="tab-btn" onclick="switchTab('travel', event)">✈️ 여행회화</button>
+  <button class="tab-btn" onclick="switchTab('build', event)">🧩 문장조합</button>
   <button class="tab-btn" onclick="switchTab('quiz', event)">🎮 퀴즈</button>
   <button class="tab-btn" onclick="switchTab('record', event)">📅 학습기록</button>
 </div>
 
-<!-- ═══════════════ HIRAGANA ═══════════════ -->
-<div id="panel-hira" class="panel active"></div>
-
-<!-- ═══════════════ KATAKANA ═══════════════ -->
-<div id="panel-kata" class="panel"></div>
+<!-- ═══════════════ KANA ═══════════════ -->
+<div id="panel-kana" class="panel active">
+  <div class="subtabs" id="kana-subtabs">
+    <button class="subtab-btn active" onclick="switchSubtab('panel-kana','kana-hira',this)">🔤 히라가나</button>
+    <button class="subtab-btn" onclick="switchSubtab('panel-kana','kana-kata',this)">🔡 카타카나</button>
+  </div>
+  <div id="kana-hira" class="subpanel active"></div>
+  <div id="kana-kata" class="subpanel"></div>
+</div>
 
 <!-- ═══════════════ VOCABULARY ═══════════════ -->
-<div id="panel-vocab" class="panel"></div>
+<div id="panel-vocab" class="panel">
+  <div class="subtabs" id="vocab-subtabs"></div>
+  <div id="vocab-content"></div>
+</div>
 
 <!-- ═══════════════ TRAVEL ═══════════════ -->
-<div id="panel-travel" class="panel"></div>
+<div id="panel-travel" class="panel">
+  <div class="subtabs" id="travel-subtabs"></div>
+  <div id="travel-content"></div>
+</div>
+
+<!-- ═══════════════ SENTENCE BUILDER ═══════════════ -->
+<div id="panel-build" class="panel"></div>
 
 <!-- ═══════════════ RECORD ═══════════════ -->
 <div id="panel-record" class="panel">
@@ -593,7 +711,6 @@
       <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="quiz-prog-fill" style="width:0%"></div></div>
     </div>
     <div class="quiz-question" id="quiz-q">?</div>
-    <button class="quiz-listen-btn" onclick="quizListen()">🔊 발음 듣기</button>
     <div class="quiz-hint" id="quiz-hint">다음 중 맞는 읽기를 고르세요</div>
     <div class="quiz-feedback" id="quiz-fb"></div>
     <div class="quiz-choices" id="quiz-choices"></div>
@@ -811,7 +928,7 @@ function speak(text, cardEl) {
 
 function _buildCharGrid(panel, rows, title) {
   let html = '<div style="max-width:560px;margin:0 auto">';
-  html += `<div class="section-title">${title}</div>`;
+  html += `<div class="section-title">${title} — 클릭하면 발음이 나와요 🔊</div>`;
   rows.forEach(row => {
     html += `<div class="hira-row-label">${row.label}</div>`;
     html += `<div class="hira-grid ${row.id}">`;
@@ -819,7 +936,7 @@ function _buildCharGrid(panel, rows, title) {
       if (!ch) {
         html += '<div class="hira-card empty"></div>';
       } else {
-        html += `<div class="hira-card">
+        html += `<div class="hira-card" data-text="${ch[0]}" onclick="speakCard(this)">
           <div class="char">${ch[0]}</div>
           <div class="roma">${ch[1]}</div>
         </div>`;
@@ -831,32 +948,47 @@ function _buildCharGrid(panel, rows, title) {
   panel.innerHTML = html;
 }
 
-function buildHira() { _buildCharGrid(document.getElementById('panel-hira'), HIRA_ROWS, '히라가나 오십음도'); }
-function buildKata() { _buildCharGrid(document.getElementById('panel-kata'), KATA_ROWS, '카타카나 오십음도'); }
+function buildKana() {
+  _buildCharGrid(document.getElementById('kana-hira'), HIRA_ROWS, '히라가나 오십음도');
+  _buildCharGrid(document.getElementById('kana-kata'), KATA_ROWS, '카타카나 오십음도');
+}
 
 function speakCard(el) { speak(el.dataset.text, el); }
+
+// ── SUBTAB SWITCHER ───────────────────────────────
+
+function switchSubtab(panelId, subpanelId, btn) {
+  const panel = document.getElementById(panelId);
+  panel.querySelectorAll('.subpanel').forEach(p => p.classList.remove('active'));
+  panel.querySelectorAll('.subtab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(subpanelId).classList.add('active');
+  btn.classList.add('active');
+}
 
 // ── RENDER VOCAB ─────────────────────────────────
 
 function buildVocab() {
-  const panel = document.getElementById('panel-vocab');
-  let html = '';
+  // 서브탭 버튼
+  const subtabs = document.getElementById('vocab-subtabs');
+  subtabs.innerHTML = VOCAB_CATS.map((cat, i) =>
+    `<button class="subtab-btn${i===0?' active':''}" onclick="switchSubtab('panel-vocab','vocab-cat-${cat.id}',this)">${cat.label}</button>`
+  ).join('');
 
-  VOCAB_CATS.forEach(cat => {
-    html += `<div class="section-title">${cat.label}</div>`;
-    html += `<div class="vocab-grid ${cat.id}">`;
-    cat.words.forEach(w => {
-      html += `<div class="vocab-card" data-text="${w.jp}" onclick="speakCard(this)">
+  // 서브패널 콘텐츠
+  const content = document.getElementById('vocab-content');
+  content.innerHTML = VOCAB_CATS.map((cat, i) => {
+    const cards = cat.words.map(w =>
+      `<div class="vocab-card" data-text="${w.jp}" onclick="speakCard(this)">
         <span class="speaker">🔊</span>
         <div class="jp">${w.jp}</div>
         <div class="roma">${w.roma}</div>
         <div class="kr">${w.kr}</div>
-      </div>`;
-    });
-    html += '</div>';
-  });
-
-  panel.innerHTML = html;
+      </div>`
+    ).join('');
+    return `<div id="vocab-cat-${cat.id}" class="subpanel${i===0?' active':''}">
+      <div class="vocab-grid ${cat.id}" style="padding-top:8px">${cards}</div>
+    </div>`;
+  }).join('');
 }
 
 // ── TRAVEL DATA ──────────────────────────────────
@@ -960,29 +1092,206 @@ const TRAVEL_CATS = [
 ];
 
 function buildTravel() {
-  const panel = document.getElementById('panel-travel');
-  let html = '';
-  TRAVEL_CATS.forEach(cat => {
-    html += `<div class="section-title">${cat.label}</div>
-    <div style="display:flex;flex-direction:column;gap:10px;max-width:640px;margin:0 auto 8px">`;
-    cat.phrases.forEach(p => {
+  // 서브탭 버튼
+  const subtabs = document.getElementById('travel-subtabs');
+  subtabs.innerHTML = TRAVEL_CATS.map((cat, i) =>
+    `<button class="subtab-btn${i===0?' active':''}" onclick="switchSubtab('panel-travel','travel-cat-${cat.id}',this)">${cat.label}</button>`
+  ).join('');
+
+  // 서브패널 콘텐츠
+  const content = document.getElementById('travel-content');
+  content.innerHTML = TRAVEL_CATS.map((cat, i) => {
+    const cards = cat.phrases.map(p => {
       const safe = p.jp.replace(/'/g, '&#39;');
-      html += `<div class="travel-card" data-text="${safe}" onclick="travelSpeak(this,'${cat.id}')">
+      return `<div class="travel-card" data-text="${safe}" onclick="travelSpeak(this,'${cat.id}')">
         <div class="travel-body">
           <div class="travel-jp">${p.jp}</div>
           <div class="travel-kr">${p.kr}</div>
         </div>
         <span class="travel-sound">🔊</span>
       </div>`;
-    });
-    html += '</div>';
-  });
-  panel.innerHTML = html;
+    }).join('');
+    return `<div id="travel-cat-${cat.id}" class="subpanel${i===0?' active':''}">
+      <div style="display:flex;flex-direction:column;gap:10px;max-width:640px;margin:0 auto;padding-top:8px">${cards}</div>
+    </div>`;
+  }).join('');
 }
 
 function travelSpeak(el, catId) {
   speak(el.dataset.text, el);
   logActivity('travel', catId);
+}
+
+// ── SENTENCE BUILDER DATA ─────────────────────────
+
+const BUILD_CATS = [
+  {
+    id: 'subj', label: '👤 주어', cls: 'cat-subj',
+    blocks: [
+      { jp:'わたしは',   kr:'나는' },
+      { jp:'あなたは',   kr:'당신은' },
+      { jp:'ともだちは', kr:'친구는' },
+      { jp:'せんせいは', kr:'선생님은' },
+      { jp:'かれは',     kr:'그는' },
+      { jp:'かのじょは', kr:'그녀는' },
+    ]
+  },
+  {
+    id: 'place', label: '📍 장소', cls: 'cat-place',
+    blocks: [
+      { jp:'コンビニで',   kr:'편의점에서' },
+      { jp:'レストランで', kr:'식당에서' },
+      { jp:'えきで',       kr:'역에서' },
+      { jp:'がっこうで',   kr:'학교에서' },
+      { jp:'いえで',       kr:'집에서' },
+      { jp:'こうえんで',   kr:'공원에서' },
+    ]
+  },
+  {
+    id: 'obj', label: '🎯 목적어', cls: 'cat-obj',
+    blocks: [
+      { jp:'すしを',     kr:'초밥을' },
+      { jp:'みずを',     kr:'물을' },
+      { jp:'きっぷを',   kr:'표를' },
+      { jp:'パンを',     kr:'빵을' },
+      { jp:'ほんを',     kr:'책을' },
+      { jp:'コーヒーを', kr:'커피를' },
+      { jp:'ラーメンを', kr:'라멘을' },
+    ]
+  },
+  {
+    id: 'verb', label: '⚡ 동사', cls: 'cat-verb',
+    blocks: [
+      { jp:'たべます',  kr:'먹어요' },
+      { jp:'のみます',  kr:'마셔요' },
+      { jp:'かいます',  kr:'사요' },
+      { jp:'よみます',  kr:'읽어요' },
+      { jp:'みます',    kr:'봐요' },
+      { jp:'います',    kr:'있어요' },
+    ]
+  },
+];
+
+// 자연스럽지 않은 조합 정의 [목적어jp, 동사jp]
+const UNNATURAL = [
+  ['みずを','たべます'],   ['コーヒーを','たべます'],
+  ['すしを','のみます'],   ['パンを','のみます'],   ['ラーメンを','のみます'],
+  ['きっぷを','のみます'], ['ほんを','のみます'],   ['きっぷを','たべます'],
+  ['ほんを','たべます'],   ['すしを','よみます'],   ['みずを','よみます'],
+  ['パンを','よみます'],   ['ラーメンを','よみます'],
+];
+
+let buildSelected = { subj: null, place: null, obj: null, verb: null };
+
+function buildSentencePanel() {
+  const panel = document.getElementById('panel-build');
+  let html = '<div class="builder-wrap">';
+
+  BUILD_CATS.forEach(cat => {
+    html += `<div class="block-category">
+      <div class="block-cat-label">${cat.label}</div>
+      <div class="block-row">`;
+    cat.blocks.forEach(b => {
+      html += `<button class="block-chip ${cat.cls}" data-cat="${cat.id}" data-jp="${b.jp}" data-kr="${b.kr}"
+        onclick="selectBlock(this,'${cat.id}','${b.jp}','${b.kr}')">
+        <span class="chip-jp">${b.jp}</span>
+        <span class="chip-kr">${b.kr}</span>
+      </button>`;
+    });
+    html += '</div></div>';
+  });
+
+  html += `<div class="builder-result" id="builder-result">
+    <div class="builder-jp" id="builder-jp" style="color:var(--sub);font-size:1rem;font-weight:600">
+      위에서 블록을 탭해 문장을 만들어보세요 🧩
+    </div>
+  </div>
+  <div class="builder-actions">
+    <button class="builder-btn speak" onclick="builderSpeak()">🔊 발음 듣기</button>
+    <button class="builder-btn reset" onclick="builderReset()">🔄 다시하기</button>
+  </div>
+  </div>`;
+
+  panel.innerHTML = html;
+}
+
+function selectBlock(el, catId, jp, kr) {
+  // 같은 카테고리 이전 선택 해제
+  document.querySelectorAll(`.block-chip[data-cat="${catId}"]`).forEach(b => b.classList.remove('selected'));
+
+  if (buildSelected[catId] && buildSelected[catId].jp === jp) {
+    // 이미 선택된 블록 → 토글 해제
+    buildSelected[catId] = null;
+  } else {
+    buildSelected[catId] = { jp, kr };
+    el.classList.add('selected');
+  }
+  updateBuilderResult();
+}
+
+function updateBuilderResult() {
+  const { subj, place, obj, verb } = buildSelected;
+  const ORDER = ['subj','place','obj','verb'];
+  const parts = ORDER.map(k => buildSelected[k]).filter(Boolean);
+
+  const jpEl = document.getElementById('builder-jp');
+
+  if (parts.length === 0) {
+    jpEl.style.color = 'var(--sub)';
+    jpEl.style.fontSize = '1rem';
+    jpEl.style.fontWeight = '600';
+    jpEl.textContent = '위에서 블록을 탭해 문장을 만들어보세요 🧩';
+    const old = document.getElementById('builder-kr');
+    const oldHint = document.getElementById('builder-hint');
+    if (old) old.remove();
+    if (oldHint) oldHint.remove();
+    return;
+  }
+
+  const jpText = parts.map(p => p.jp).join(' ');
+  const krText = parts.map(p => p.kr).join(' ');
+
+  jpEl.style.color = 'var(--text)';
+  jpEl.style.fontSize = '1.6rem';
+  jpEl.style.fontWeight = '800';
+  jpEl.textContent = jpText;
+
+  // 한국어 줄
+  let krEl = document.getElementById('builder-kr');
+  if (!krEl) {
+    krEl = document.createElement('div');
+    krEl.id = 'builder-kr';
+    krEl.className = 'builder-kr';
+    jpEl.parentNode.insertBefore(krEl, jpEl.nextSibling);
+  }
+  krEl.textContent = krText;
+
+  // 힌트 줄
+  let hintEl = document.getElementById('builder-hint');
+  const isUnnatural = obj && verb && UNNATURAL.some(([o,v]) => o === obj.jp && v === verb.jp);
+  if (isUnnatural) {
+    if (!hintEl) {
+      hintEl = document.createElement('div');
+      hintEl.id = 'builder-hint';
+      hintEl.className = 'builder-hint';
+      document.getElementById('builder-result').appendChild(hintEl);
+    }
+    hintEl.textContent = '❗ 이 조합은 자연스럽지 않을 수 있어요. 목적어와 동사가 어울리는지 확인해보세요!';
+  } else if (hintEl) {
+    hintEl.remove();
+  }
+}
+
+function builderSpeak() {
+  const parts = ['subj','place','obj','verb'].map(k => buildSelected[k]).filter(Boolean);
+  if (!parts.length) { showToast('먼저 블록을 선택해주세요!'); return; }
+  speak(parts.map(p => p.jp).join(''));
+}
+
+function builderReset() {
+  buildSelected = { subj: null, place: null, obj: null, verb: null };
+  document.querySelectorAll('.block-chip').forEach(b => b.classList.remove('selected'));
+  updateBuilderResult();
 }
 
 // ── QUIZ DATA ─────────────────────────────────────
@@ -1095,7 +1404,6 @@ function checkAnswer(btn, choice) {
     sessionCorrect++;
     btn.classList.add('correct');
     document.getElementById('quiz-fb').textContent = '✨ 정답!';
-    speak(currentQuiz.q);
   } else {
     btn.classList.add('wrong');
     document.getElementById('quiz-fb').textContent = `😢 정답: ${currentQuiz.a}`;
@@ -1322,14 +1630,16 @@ function switchTab(name, e) {
   document.getElementById('panel-' + name).classList.add('active');
   e.currentTarget.classList.add('active');
 
-  if (name === 'kata'   && !document.getElementById('panel-kata').innerHTML) buildKata();
-  if (name === 'travel' && !document.getElementById('panel-travel').innerHTML) buildTravel();
+  if (name === 'kana'   && !document.getElementById('kana-hira').innerHTML)    buildKana();
+  if (name === 'travel' && !document.getElementById('travel-content').innerHTML) buildTravel();
+  if (name === 'build'  && !document.getElementById('panel-build').innerHTML)  buildSentencePanel();
   if (name === 'record') { const n=new Date(); buildCalendar(n.getFullYear(), n.getMonth()); }
   if (name === 'quiz') {
     if (!currentQuiz) startSession();
     renderHistory();
   }
-  if (['hira','kata','vocab'].includes(name)) logActivity(name);
+  if (name === 'kana')  logActivity('hira');
+  if (name === 'vocab') logActivity('vocab');
 }
 
 // ── TOAST ─────────────────────────────────────────
@@ -1341,14 +1651,11 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-function quizListen() {
-  if (currentQuiz) speak(currentQuiz.q);
-}
 
 // ── INIT ─────────────────────────────────────────
-buildHira();
+buildKana();
 buildVocab();
-logActivity('hira'); // 첫 방문 기록
+logActivity('hira');
 </script>
 </body>
 </html>
